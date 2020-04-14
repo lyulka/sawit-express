@@ -21,14 +21,14 @@ db.on('error', console.error.bind); // binds the error event.
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Serve the client
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+app.get('*', (req, res) =>{
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 // Routers for api calls
-app.use('/api/OARBeli', oarbeliRouter);
-app.use('/api/OARLab', oarlabRouter);
-app.use('/api/Olah', olahRouter);
+// app.use('/api/OARBeli', oarbeliRouter);
+// app.use('/api/OARLab', oarlabRouter);
+// app.use('/api/Olah', olahRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port);

@@ -20,9 +20,9 @@ const oarbeli_create_post = function(req, res, next) {
 /// OARBeli API ROUTES ///
 
 // GET request for OARBeli
-router.get('/collection', getCollection);
+// router.get('/collection', getCollection);
 
 // POST request for creating OARBeli
-router.get('/collection/create', postCreateOARBeli);
+// router.get('/collection/create', postCreateOARBeli);
 
 module.exports = router;
