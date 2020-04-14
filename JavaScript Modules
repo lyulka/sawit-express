@@ -1,0 +1,39 @@
+Modules
+
+A background on Modules
+
+JavaScript programs started off pretty small - most of its usage in the early
+days was to do isolated scripting tasks, providing a bit of interactivity to
+your web pages where needed, so large scripts were generally not needed. Fast
+forware a few years and we now have complete applications being run in browsers 
+with a lot of JavaScript as well as JavaScript being used in other contexts
+(Node.js, for example).
+
+It has therefore made sense in recent years to start thinking about providing
+mechanisms for splitting JavaScript programs up into separate modules that can
+be imported when needed. Node.js has had this ability for a long time, and there
+are a number of JavaScript libraries and frameworks that enable module usage.
+
+The good news is that modern browsers have started to support module functionality
+natively, and this is what this article is all about. This can only be a good think
+- browsers can optimize loading of modules, making it more efficient than having
+to use a library and do all that extra client-side processing and extra round trips.
+
+Differences between modules and standard scripts
+
+- You need to pay attention to local testing - if you try to load the HTML file 
+locally (i.e. with a file:// URL), you'll run into CORS errors due to JavaScript module
+security requirements. You need to do testing through a server.
+- Also, note that you might get different behavior from sections of script defined
+inside modules as opposed to in standard scripts. This is because modules use
+strict mode automatically.
+- There is no need to use the defer attribute when loading a module script; modules
+are deferred automatically.
+- Modules are executed once, even if they have been referenced in multiple script
+tags.
+- Last but not least, let's make this clear - module features are imported into
+the scope of a single script - they aren't available in the global scope. therefore,
+you will only be able to access imported features in the script they are imported
+into, and you won't be able to access them from the JavaScript console, for example.
+You'll still get syntax errors shown in the DevTools, but you'll not be able to use
+some of the debugging techniques you might have expected to use.

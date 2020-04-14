@@ -1,0 +1,192 @@
+var async = require('async');
+var OARBeli = require('./models/oar_beli');
+
+var mongoose = require('mongoose');
+var passwords = require('./passwords.json');
+// var mongoDB = passwords.connectionStringSawit0;
+var mongoDB = "mongodb+srv://mimiehadi:samuraikoi12@sawit0-cy3gd.mongodb.net/test?retryWrites=true&w=majority"
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const OARBeliBuilder = require('./utilities/oar_beli_builder')
+
+var oarbeli_array = [];
+
+function oarbeliCreate(oarbeliDetails, callback) {
+    var oarbeli = new OARBeli(oarbeliDetails);
+
+    oarbeli.save(function(err) {
+        if (err) {
+            callback(err, null);
+            return
+        }
+        console.log('New OARBeli: ' + oarbeliDetails.date)
+        oarbeli_array.push(oarbeliDetails);
+        callback(null, oarbeli);
+    });
+}
+
+function initializeOarbeliCollection(callback) {
+    async.parallel([
+        (callback) => {
+            var oarBeliBuilder = new OARBeliBuilder();
+            
+            oarBeliBuilder
+                .date(Date(2020, 1))
+                .cpo(10)
+                .cpoTonnage(100)
+                .pk(20)
+                .pkTonnage(200)
+                .cangkang(30)
+                .cangkangTonnage(300)
+                .hargaBeli(40)
+                .hargaBeliTonnage(400)
+                .supplier(50)
+                .supplierTonnage(500)
+                .rampLuar(55)
+                .rampLuarTonnage(550)
+                .ptpn(60)
+                .ptpnTonnage(600)
+                .inti(70)
+                .intiTonnage(700)
+                .plasma1(80)
+                .plasma1Tonnage(800)
+                .plasma3(90)
+                .plasma3Tonnage(900)
+                .hkl(100)
+                .hklTonnage(1000)
+                .hka(110)
+                .hkaTonnage(1100)
+                .ss(120)
+                .ssTonnage(1200)
+                .kosOlah(130)
+                .oarBeli(0.4)
+
+            oarbeliCreate(oarBeliBuilder.createObject(), callback);
+        }, (callback) => {
+            var oarBeliBuilder = new OARBeliBuilder();
+            
+            oarBeliBuilder
+                .date(Date(2020, 2))
+                .cpo(10)
+                .cpoTonnage(100)
+                .pk(20)
+                .pkTonnage(200)
+                .cangkang(30)
+                .cangkangTonnage(300)
+                .hargaBeli(40)
+                .hargaBeliTonnage(400)
+                .supplier(50)
+                .supplierTonnage(500)
+                .rampLuar(55)
+                .rampLuarTonnage(550)
+                .ptpn(60)
+                .ptpnTonnage(600)
+                .inti(70)
+                .intiTonnage(700)
+                .plasma1(80)
+                .plasma1Tonnage(800)
+                .plasma3(90)
+                .plasma3Tonnage(900)
+                .hkl(100)
+                .hklTonnage(1000)
+                .hka(110)
+                .hkaTonnage(1100)
+                .ss(120)
+                .ssTonnage(1200)
+                .kosOlah(130)
+                .oarBeli(0.4)
+
+            oarbeliCreate(oarBeliBuilder.createObject(), callback);
+        }, (callback) => {
+            var oarBeliBuilder = new OARBeliBuilder();
+            
+            oarBeliBuilder
+                .date(Date(2020, 3))
+                .cpo(10)
+                .cpoTonnage(100)
+                .pk(20)
+                .pkTonnage(200)
+                .cangkang(30)
+                .cangkangTonnage(300)
+                .hargaBeli(40)
+                .hargaBeliTonnage(400)
+                .supplier(50)
+                .supplierTonnage(500)
+                .rampLuar(55)
+                .rampLuarTonnage(550)
+                .ptpn(60)
+                .ptpnTonnage(600)
+                .inti(70)
+                .intiTonnage(700)
+                .plasma1(80)
+                .plasma1Tonnage(800)
+                .plasma3(90)
+                .plasma3Tonnage(900)
+                .hkl(100)
+                .hklTonnage(1000)
+                .hka(110)
+                .hkaTonnage(1100)
+                .ss(120)
+                .ssTonnage(1200)
+                .kosOlah(130)
+                .oarBeli(0.4)
+
+            oarbeliCreate(oarBeliBuilder.createObject(), callback);
+        }, (callback) => {
+            var oarBeliBuilder = new OARBeliBuilder();
+            
+            oarBeliBuilder
+                .date(Date(2020, 4))
+                .cpo(10)
+                .cpoTonnage(100)
+                .pk(20)
+                .pkTonnage(200)
+                .cangkang(30)
+                .cangkangTonnage(300)
+                .hargaBeli(40)
+                .hargaBeliTonnage(400)
+                .supplier(50)
+                .supplierTonnage(500)
+                .rampLuar(55)
+                .rampLuarTonnage(550)
+                .ptpn(60)
+                .ptpnTonnage(600)
+                .inti(70)
+                .intiTonnage(700)
+                .plasma1(80)
+                .plasma1Tonnage(800)
+                .plasma3(90)
+                .plasma3Tonnage(900)
+                .hkl(100)
+                .hklTonnage(1000)
+                .hka(110)
+                .hkaTonnage(1100)
+                .ss(120)
+                .ssTonnage(1200)
+                .kosOlah(130)
+                .oarBeli(0.4)
+
+            oarbeliCreate(oarBeliBuilder.createObject(), callback);
+        }
+    ],
+    // optional callback
+    callback);
+}
+
+async.series([
+    initializeOarbeliCollection,
+],
+// Optional callback
+(err, results) => {
+    if (err) {
+        console.log('FINAL ERR: ' + err);
+    }
+    else {
+        console.log('We got it: ' + oarbeli_array);
+    }
+    // All done, disconnect from MongoDB
+    mongoose.connection.close();
+})
