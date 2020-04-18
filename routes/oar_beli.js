@@ -4,13 +4,17 @@ var router = express.Router();
 var OARBeli = require('../models/oar_beli');
 
 const oarbeli_collection = function(req, res, next) {
-    OARBeli.find({})
-        .exec((err, list_oarbeli) => {
-            if (err) { return next(err); }
-            
-            // Successful, so send
-            res.json(list_oarbeli);
-        })
+    async.parallel({
+        list_oarbeli: (callback) => {
+            OARBeli.find({})
+                .exec();
+        },
+    }, (err, results) => {
+        if (err) { return next(err); }
+
+        // Successful,so send
+        res.json(list_oarbeli);
+    });
 }
 
 const oarbeli_create_post = function(req, res, next) {
@@ -20,7 +24,7 @@ const oarbeli_create_post = function(req, res, next) {
 /// OARBeli API ROUTES ///
 
 // GET request for OARBeli
-// router.get('/collection', getCollection);
+router.get('/collection', oarbeli_collection);
 
 // POST request for creating OARBeli
 // router.get('/collection/create', postCreateOARBeli);

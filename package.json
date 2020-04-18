@@ -15,8 +15,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.1",
     "@ant-design/icons": "^4.0.6",
-    "mongoose": "^5.9.7"
+    "express": "^4.16.1",
+    "mongoose": "^5.9.7",
+    "react-async": "^10.0.1",
+    "use-data-api": "^1.0.1"
   }
 }

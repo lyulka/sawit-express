@@ -5,12 +5,26 @@ import HargaTonaseInput from './HargaTonaseInput.jsx';
 
 const OARBeliAdd = () => {
 
+    const fieldAndLabelNames = [
+        [ "cpo", "CPO" ],
+        [ "pk", "PK" ],
+        [ "cangkang", "Cangkang" ],
+        [ "ring1", "Ring 1" ],
+        [ "rampLuar", "Ramp Luar" ],
+        [ "ptpn", "PTPN" ],
+        [ "inti", "Inti" ],
+        [ "plasma1", "Plasma 1" ],
+        [ "plasma3", "Plasma 3" ],
+        [ "hkl", "HKL" ],
+        [ "hka", "HKA" ],
+        [ "hkla", "HKLA" ],
+        [ "ss", "SS" ]
+    ]
+
     const onFinish = (values) => {
         for (const key of Object.keys(values)) {
             if (values[key] === undefined) { values[key] = 0 };
         }
-
-        console.log('Success:', values);
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -35,67 +49,14 @@ const OARBeliAdd = () => {
                 <DatePicker style={{width: '100%'}}/>
             </Form.Item>
 
-            <HargaTonaseInput
-                label="CPO"
-                fieldName="cpo"
-            />
-
-            <HargaTonaseInput
-                label="PK"
-                fieldName="pk"
-            />
-
-            <HargaTonaseInput
-                label="Cangkang"
-                fieldName="cangkang"
-            />
-
-            <HargaTonaseInput
-                label="Harga beli"
-                fieldName="hargabeli"
-            />
-
-            <HargaTonaseInput
-                label="Supplier"
-                fieldName="supplier"
-            />
-            <HargaTonaseInput
-                label="Ramp luar"
-                fieldName="rampluar"
-            />
-
-            <HargaTonaseInput
-                label="PTPN"
-                fieldName="ptpn"
-            />
-
-            <HargaTonaseInput
-                label="Inti"
-                fieldName="inti"
-            />
-
-            <HargaTonaseInput
-                label="Plasma 1"
-                fieldName="plasma1"
-            />
-
-            <HargaTonaseInput
-                label="Plasma 3"
-                fieldName="plasma3"
-            />
-            <HargaTonaseInput
-                label="HKL"
-                fieldName="hkl"
-            />
-
-            <HargaTonaseInput
-                label="HKA"
-                fieldName="hka"
-            />
-            <HargaTonaseInput
-                label="SS"
-                fieldName="ss"
-            />
+            {fieldAndLabelNames.map((fieldLabelPair) => {
+                return (
+                    <HargaTonaseInput
+                        fieldName={fieldLabelPair[0]}
+                        label={fieldLabelPair[1]}
+                        />
+                );
+            })}
 
             <Form.Item
                 label="Kos Olah"

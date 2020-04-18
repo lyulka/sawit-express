@@ -10,8 +10,8 @@ class OARBeliBuilder {
     pkTonnage(pk_tonnage) {this.mPkTonnage = pk_tonnage; return this;}
     cangkang(cangkang) {this.mCangkang = cangkang; return this;}
     cangkangTonnage(cangkang_tonnage) {this.mCangkangTonnage = cangkang_tonnage; return this;}
-    hargaBeli(harga_beli) {this.mHargaBeli = harga_beli; return this;}
-    hargaBeliTonnage(harga_beli_tonnage) {this.mHargaBeliTonnage = harga_beli_tonnage; return this;}
+    ring1(ring1) {this.mRing1 = ring1; return this;}
+    ring1Tonnage(ring1_tonnage) {this.mRing1Tonnage = ring1_tonnage; return this;}
     supplier(supplier) {this.mSupplier = supplier; return this;}
     supplierTonnage(supplier_tonnage) {this.mSupplierTonnage = supplier_tonnage; return this;}
     rampLuar(ramp_luar) {this.mRampLuar = ramp_luar; return this;}
@@ -28,6 +28,8 @@ class OARBeliBuilder {
     hklTonnage(hkl_tonnage) {this.mHklTonnage = hkl_tonnage; return this;}
     hka(hka) {this.mHka = hka; return this;}
     hkaTonnage(hka_tonnage) {this.mHkaTonnage = hka_tonnage; return this;}
+    hkla(hkla) {this.mHkla = hkla; return this;}
+    hklaTonnage(hkla_tonnage) {this.mHklaTonnage = hkla_tonnage; return this;}
     ss(ss) {this.mSs = ss; return this;}
     ssTonnage(ss_tonnage) {this.mSsTonnage = ss_tonnage; return this;}
     kosOlah(kos_olah) {this.mKosOlah = kos_olah; return this;}
@@ -43,8 +45,8 @@ class OARBeliBuilder {
         result.pkTonnage = this.mPkTonnage;
         result.cangkang = this.mCangkang;
         result.cangkangTonnage = this.mCangkangTonnage;
-        result.hargaBeli = this.mHargaBeli;
-        result.hargaBeliTonnage = this.mHargaBeliTonnage;
+        result.ring1 = this.mRing1;
+        result.ring1Tonnage = this.mRing1Tonnage;
         result.supplier = this.mSupplier;
         result.supplierTonnage = this.mSupplierTonnage;
         result.rampLuar = this.mRampLuar;
@@ -61,6 +63,8 @@ class OARBeliBuilder {
         result.hklTonnage = this.mHklTonnage;
         result.hka = this.mHka;
         result.hkaTonnage = this.mHkaTonnage;
+        result.hkla = this.mHkla;
+        result.hklaTonnage = this.mHklaTonnage;
         result.ss = this.mSs;
         result.ssTonnage = this.mSsTonnage;
         result.kosOlah = this.mKosOlah;
