@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var cors = require('cors');
+var bodyParser = require('body-parser');
 
 var oarbeliRouter = require('./routes/oar_beli')
 var oarlabRouter = require('./routes/oar_lab');
@@ -17,6 +18,9 @@ var mongoDB = passwords.connectionStringSawit0;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind); // binds the error event.
+
+// Handles post requests
+app.use(bodyParser);
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));

@@ -24,6 +24,8 @@ const putEditOarbeli = async function(values) {
 // The POST HTTP method is used when we want to create a new resource in the
 // server
 const postAddOarbeli = async function(values) {
+    console.log("postAddOarbeli: in");
+
     let init = {
         method: 'POST',
         body: JSON.stringify(values),
@@ -34,6 +36,8 @@ const postAddOarbeli = async function(values) {
         init
     )
     .then((response) => {
+        console.log(response.status);
+        console.log(response.message);
         if (response.status === 200) {
             message.info("New entry created");
         } else {
