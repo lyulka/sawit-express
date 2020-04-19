@@ -11,6 +11,7 @@ const OARBeli = () => {
 
         await fetch(
             "http://sawit-express.herokuapp.com/api/OARBeli/collection"
+            // "http://localhost:5000/api/OARBeli/collection"
         )
         .then((response) => {
             return response.json();
