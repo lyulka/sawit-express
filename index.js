@@ -20,7 +20,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind); // binds the error event.
 
 // Handles post requests
-app.use(bodyParser);
+app.use(bodyParser.json());
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
