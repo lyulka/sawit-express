@@ -6,6 +6,7 @@ import './App.css';
 import { Route, Switch, Link } from 'react-router-dom' 
 import OARBeli from './components/OARBeli';
 import OARBeliAdd from './components/OARBeliAdd';
+import OARBeliEdit from './components/OARBeliEdit';
 import { Menu } from 'antd';
 
 function App() {
@@ -25,11 +26,10 @@ function App() {
           </Menu.Item>
         </Menu>  
       
-        {/* Pro tip: You should put the more specific routes
-        before the more general ones. */}
         <Switch>
-          <Route path='/OARBeli/add' component={OARBeliAdd}/>
-          <Route path='/OARBeli' component={OARBeli}/>
+          <Route exact path='/OARBeli/add' component={OARBeliAdd} />
+          <Route exact path='/OARBeli/edit/:id' component={OARBeliEdit} />
+          <Route exact path='/OARBeli' component={OARBeli}/>
         </Switch>
       </div>
     );

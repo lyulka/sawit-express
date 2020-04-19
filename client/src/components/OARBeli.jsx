@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import OARBeliAdd from './OARBeliAdd';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Table, Popconfirm, message } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, StepForwardOutlined } from '@ant-design/icons'
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 
 const OARBeli = () => {
@@ -11,7 +10,7 @@ const OARBeli = () => {
     const fetchData = async function() {
 
         await fetch(
-            "http://localhost:5000/api/OARBeli/collection"
+            "http://sawit-express.herokuapp.com/api/OARBeli/collection"
         )
         .then((response) => {
             return response.json();
@@ -25,13 +24,13 @@ const OARBeli = () => {
     }
 
     const postDeleteOarbeli = async function(id) {
-        let options = {
+        let init = {
             method: 'POST',
         }
 
         await fetch(
-            `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
-            options
+            `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
+            init
         )
         .then((response) => {
             if (response.status === 200) {
@@ -69,7 +68,7 @@ const OARBeli = () => {
                         okText={"Yes"} 
                         cancelText={"No"}
                         onConfirm={() => postDeleteOarbeli(record.key)}>
-                       <a href="#"><DeleteOutlined /> Delete</a>
+                    <a href="google.com"><DeleteOutlined /> Delete</a>
                     </Popconfirm>
                 </span>
                 );
@@ -78,7 +77,7 @@ const OARBeli = () => {
     ]
 
     // Fetch oarbeli collection
-    useEffect(fetchData, []);
+    useEffect(() => { fetchData() }, []);
 
     return (
         <div style={{ paddingTop: '16px' }}>

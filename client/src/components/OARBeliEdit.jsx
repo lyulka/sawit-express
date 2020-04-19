@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 
-import { Redirect } from 'react-router-dom' 
+import { useParams, Redirect } from 'react-router-dom'; 
 import { Form, Input, Button, DatePicker, PageHeader, message } from 'antd';
 import HargaTonaseInput from './HargaTonaseInput.jsx';
 
-const OARBeliAdd = () => {
+const OARBeliEdit = () => {
+
+    const entryId = useParams().id;
 
     const [ finished, setFinished ] = useState(false);
 
@@ -30,21 +32,21 @@ const OARBeliAdd = () => {
         number: '${label} must be a positive number'
     }
 
-    const postAddOarbeli = async function(values) {
+    const postEditOarbeli = async function(values) {
         let init = {
             method: 'POST',
             body: JSON.stringify(values),
         }
 
         await fetch(
-            "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
+            `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
             init
         )
         .then((response) => {
             if (response.status === 200) {
-                message.info("New entry created");
+                message.info("Entry edited");
             } else {
-                message.info("Something went wrong when creating the entry.")
+                message.info("Something went wrong when editing the entry.");
             }
         })
     }
@@ -54,8 +56,9 @@ const OARBeliAdd = () => {
             if (values[key] === undefined) { values[key] = 0 };
         }
 
+        values.id = entryId;
         console.log(values);
-        postAddOarbeli(values);
+        postEditOarbeli(values);
 
         setFinished(true);
     }
@@ -70,15 +73,18 @@ const OARBeliAdd = () => {
 
         <PageHeader
             onBack={() => window.history.back()}
-            title={"🌴 Add new OAR Beli"}>
+            title={"🌴 Edit OAR Beli"}>
         </PageHeader>
+
+        <p>
+            {`You are editing entry ID: ${entryId}`}
+        </p>
 
         <Form
             name="oarbeli_form"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             labelCol={{ span: 4 }}
-            validateMessages={validateMessages}
         >
             <Form.Item name={'date'} label={'Date'}>
                 <DatePicker style={{width: '100%'}}/>
@@ -113,4 +119,4 @@ const OARBeliAdd = () => {
     );
 };
 
-export default OARBeliAdd;
+export default OARBeliEdit;
