@@ -1,3 +1,4 @@
+var async = require('async');
 var express = require('express');
 var router = express.Router();
 
@@ -7,13 +8,13 @@ const oarbeli_collection = function(req, res, next) {
     async.parallel({
         list_oarbeli: (callback) => {
             OARBeli.find({})
-                .exec();
+                .exec(callback);
         },
     }, (err, results) => {
         if (err) { return next(err); }
 
         // Successful,so send
-        res.json(list_oarbeli);
+        res.json(results.list_oarbeli);
     });
 }
 
