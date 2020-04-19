@@ -3,8 +3,7 @@ var OARBeli = require('./models/oar_beli');
 
 var mongoose = require('mongoose');
 var passwords = require('./passwords.json');
-// var mongoDB = passwords.connectionStringSawit0;
-var mongoDB = "mongodb+srv://mimiehadi:samuraikoi12@sawit0-cy3gd.mongodb.net/test?retryWrites=true&w=majority"
+var mongoDB = passwords.connectionStringSawit0;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -34,7 +33,7 @@ function initializeOarbeliCollection(callback) {
             var oarBeliBuilder = new OARBeliBuilder();
             
             oarBeliBuilder
-                .date(Date(2020, 1))
+                .date(new Date("2020/03/02"))
                 .cpo(10)
                 .cpoTonnage(100)
                 .pk(20)
@@ -69,7 +68,7 @@ function initializeOarbeliCollection(callback) {
             var oarBeliBuilder = new OARBeliBuilder();
             
             oarBeliBuilder
-                .date(Date(2020, 2))
+                .date(new Date("2020/04/03"))
                 .cpo(10)
                 .cpoTonnage(100)
                 .pk(20)
@@ -104,7 +103,7 @@ function initializeOarbeliCollection(callback) {
             var oarBeliBuilder = new OARBeliBuilder();
             
             oarBeliBuilder
-                .date(Date(2020, 3))
+                .date(new Date("2020/01/06"))
                 .cpo(10)
                 .cpoTonnage(100)
                 .pk(20)
@@ -139,7 +138,7 @@ function initializeOarbeliCollection(callback) {
             var oarBeliBuilder = new OARBeliBuilder();
             
             oarBeliBuilder
-                .date(Date(2020, 4))
+                .date(new Date("2020/03/20"))
                 .cpo(10)
                 .cpoTonnage(100)
                 .pk(20)
@@ -167,7 +166,7 @@ function initializeOarbeliCollection(callback) {
                 .ss(120)
                 .ssTonnage(1200)
                 .kosOlah(130)
-                .oarBeli(0.4)
+                .oarBeli(0.5)
 
             oarbeliCreate(oarBeliBuilder.createObject(), callback);
         }

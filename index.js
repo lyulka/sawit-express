@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var cors = require('cors');
 
 var oarbeliRouter = require('./routes/oar_beli')
 var oarlabRouter = require('./routes/oar_lab');
@@ -21,7 +22,7 @@ db.on('error', console.error.bind); // binds the error event.
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Routers for api calls
-app.use('/api/OARBeli', oarbeliRouter);
+app.use('/api/OARBeli', cors(), oarbeliRouter);
 // app.use('/api/OARLab', oarlabRouter);
 // app.use('/api/Olah', olahRouter);
 

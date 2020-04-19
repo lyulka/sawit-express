@@ -22,12 +22,28 @@ const oarbeli_create_post = function(req, res, next) {
     // TODO
 }
 
+const oarbeli_delete_post = function(req, res, next) {
+    // TODO
+}
+
+const oarbeli_edit_post = function(req, res, next) {
+    // TODO
+}
+
+
+
 /// OARBeli API ROUTES ///
 
 // GET request for OARBeli
 router.get('/collection', oarbeli_collection);
 
-// POST request for creating OARBeli
-// router.get('/collection/create', postCreateOARBeli);
+// POST request for creating oarbeli
+// router.post('/collection/create', oarbeli_create_post);
+
+// POST request for deleting oarbeli
+// router.post('/collection/delete/:id, oarbeli_delete_post);
+
+// POST request for editing oarbeli
+// router.post('/collection/edit/:id, oarbeli_edit_post);
 
 module.exports = router;

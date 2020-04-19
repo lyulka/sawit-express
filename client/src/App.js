@@ -28,8 +28,8 @@ function App() {
         {/* Pro tip: You should put the more specific routes
         before the more general ones. */}
         <Switch>
-          <Route exact path='/OARBeli/add' component={OARBeliAdd}/>
-          <Route exact path='/OARBeli' component={OARBeli}/>
+          <Route path='/OARBeli/add' component={OARBeliAdd}/>
+          <Route path='/OARBeli' component={OARBeli}/>
         </Switch>
       </div>
     );
