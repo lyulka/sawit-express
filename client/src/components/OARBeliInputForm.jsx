@@ -1,13 +1,55 @@
 import React from 'react';
 import { useState } from 'react';
 
-import { Redirect } from 'react-router-dom' 
+import { useParams, Redirect } from 'react-router-dom'; 
 import { Form, Input, Button, DatePicker, PageHeader, message } from 'antd';
 import HargaTonaseInput from './HargaTonaseInput.jsx';
+import { putEditOarbeli, postAddOarbeli } from '../utilities/FormPost';
 
-const OARBeliAdd = () => {
+const OARBeliInputForm = ({ action }) => {
 
-    const [ finished, setFinished ] = useState(false);
+    const urlParams = useParams();  
+    const entryId = (action === "edit") ? urlParams.id : null;
+
+    const options = (action === "edit") ?
+    { // Options for Edit new OAR Beli form
+        editingMessage: `You are editing entry ID: ${entryId}`,
+        pageTitle: "🌴 Edit OAR Beli",
+        onFinish: (values) => {
+            for (const key of Object.keys(values)) {
+                if (values[key] === undefined) { values[key] = 0 };
+            }
+    
+            values.id = entryId;
+            console.log(values);
+            putEditOarbeli(values);
+    
+            setFinished(true);
+        },
+        onFinishFailed: (errorInfo) => {
+            console.log('Failed:', errorInfo);
+        },
+    }
+    :
+    { // Options for Add new OAR Beli form
+        editingMessage: false,
+        pageTitle: "🌴 Add new OAR Beli",
+        onFinish: (values) => {
+            for (const key of Object.keys(values)) {
+                if (values[key] === undefined) { values[key] = 0 };
+            }
+    
+            console.log(values);
+            postAddOarbeli(values);
+    
+            setFinished(true);
+        },
+        onFinishFailed: (errorInfo) => {
+            console.log('Failed:', errorInfo);
+        },
+    };
+
+    const [ finished, setFinished ] = useState(false); 
 
     const fieldAndLabelNames = [
         [ "cpo", "CPO" ],
@@ -30,40 +72,6 @@ const OARBeliAdd = () => {
         number: '${label} must be a positive number'
     }
 
-    const postAddOarbeli = async function(values) {
-        let init = {
-            method: 'POST',
-            body: JSON.stringify(values),
-        }
-
-        await fetch(
-            "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
-            init
-        )
-        .then((response) => {
-            if (response.status === 200) {
-                message.info("New entry created");
-            } else {
-                message.info("Something went wrong when creating the entry.")
-            }
-        })
-    }
-
-    const onFinish = (values) => {
-        for (const key of Object.keys(values)) {
-            if (values[key] === undefined) { values[key] = 0 };
-        }
-
-        console.log(values);
-        postAddOarbeli(values);
-
-        setFinished(true);
-    }
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    }
-
     return (
         <div>
         { (finished) && <Redirect to="/OARBeli" /> }
@@ -73,10 +81,16 @@ const OARBeliAdd = () => {
             title={"🌴 Add new OAR Beli"}>
         </PageHeader>
 
+        { (options.editingMessage) && (
+            <p>
+                {`You are editing entry ID: ${entryId}`}
+            </p>
+        )}
+
         <Form
             name="oarbeli_form"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            onFinish={options.onFinish}
+            onFinishFailed={options.onFinishFailed}
             labelCol={{ span: 4 }}
             validateMessages={validateMessages}
         >
@@ -113,4 +127,4 @@ const OARBeliAdd = () => {
     );
 };
 
-export default OARBeliAdd;
+export default OARBeliInputForm;

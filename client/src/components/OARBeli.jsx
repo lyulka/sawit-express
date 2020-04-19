@@ -23,9 +23,11 @@ const OARBeli = () => {
         })
     }
 
-    const postDeleteOarbeli = async function(id) {
+    // The DELETE HTTP method is used when we want to delete an existing resource in
+    // the server
+    const deleteOarbeli = async function(id) {
         let init = {
-            method: 'POST',
+            method: 'DELETE',
         }
 
         await fetch(
@@ -67,7 +69,7 @@ const OARBeli = () => {
                         title={"Are you sure you want to delete this entry?"} 
                         okText={"Yes"} 
                         cancelText={"No"}
-                        onConfirm={() => postDeleteOarbeli(record.key)}>
+                        onConfirm={() => deleteOarbeli(record.key)}>
                     <a href="google.com"><DeleteOutlined /> Delete</a>
                     </Popconfirm>
                 </span>

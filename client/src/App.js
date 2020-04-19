@@ -5,8 +5,9 @@ import './App.css';
 
 import { Route, Switch, Link } from 'react-router-dom' 
 import OARBeli from './components/OARBeli';
-import OARBeliAdd from './components/OARBeliAdd';
-import OARBeliEdit from './components/OARBeliEdit';
+// import OARBeliAdd from './components/OARBeliAdd';
+// import OARBeliEdit from './components/OARBeliEdit';
+import OARBeliInputForm from './components/OARBeliInputForm'
 import { Menu } from 'antd';
 
 function App() {
@@ -27,8 +28,8 @@ function App() {
         </Menu>  
       
         <Switch>
-          <Route exact path='/OARBeli/add' component={OARBeliAdd} />
-          <Route exact path='/OARBeli/edit/:id' component={OARBeliEdit} />
+          <Route exact path='/OARBeli/add' component={() => <OARBeliInputForm action="add" /> } />
+          <Route exact path='/OARBeli/edit/:id' component={() => <OARBeliInputForm action="edit" />} />
           <Route exact path='/OARBeli' component={OARBeli}/>
         </Switch>
       </div>
