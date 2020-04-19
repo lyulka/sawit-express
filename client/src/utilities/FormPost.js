@@ -9,7 +9,7 @@ const putEditOarbeli = async function(values) {
     }
 
     await fetch(
-        `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
+        `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
         init
     )
     .then((response) => {
@@ -33,7 +33,7 @@ const postAddOarbeli = async function(values) {
     }
 
     await fetch(
-        "http://localhost:5000/api/OARBeli/collection/create",
+        "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
         init
     )
     .then((response) => {
