@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Button, Table, Popconfirm, message } from 'antd';
+import { Button, Table, Popconfirm } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+
+import { deleteOarbeli } from '../utilities/FormPost'; 
 
 
 const OARBeli = () => {
 
     const fetchData = async function() {
-
         await fetch(
             "http://sawit-express.herokuapp.com/api/OARBeli/collection"
             // "http://localhost:5000/api/OARBeli/collection"
@@ -21,26 +22,6 @@ const OARBeli = () => {
                 element.key = element._id;
 
             setOarbeliArray(array);
-        })
-    }
-
-    // The DELETE HTTP method is used when we want to delete an existing resource in
-    // the server
-    const deleteOarbeli = async function(id) {
-        let init = {
-            method: 'DELETE',
-        }
-
-        await fetch(
-            `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
-            init
-        )
-        .then((response) => {
-            if (response.status === 200) {
-                message.info(`The entry created on ${response.deletedDate} was successfully deleted.`);
-            } else {
-                message.info(`Something went wrong when deleting the entry created on ${response.deletedDate}.`);
-            }
         })
     }
 

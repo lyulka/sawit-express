@@ -20,7 +20,6 @@ const oarbeli_collection = function(req, res, next) {
 
 const oarbeli_create_post = function(req, res, next) {
     try {
-
         var oarbeli = new OARBeli({
             date: req.body.date,
             cpo: req.body.cpo,
@@ -55,10 +54,10 @@ const oarbeli_create_post = function(req, res, next) {
 
 
         oarbeli.save((err) => {
-            if  (err) { return next(err); }
+            return next(err);
         })
 
-        res.send("Operation successful");
+        res.send("Create successful");
 
     } catch(err) {
         return next(err);
@@ -66,6 +65,21 @@ const oarbeli_create_post = function(req, res, next) {
 }
 
 const oarbeli_delete_post = function(req, res, next) {
+    try {
+        const entryId = req.params.id;
+
+        OARBeli.deleteOne({ id: entryId }, (err) => {
+            return next(err);
+        })
+
+        res.send("Delete successful");
+
+    } catch(err) {
+        return next(err);
+    }
+}
+
+const oarbeli_edit_get = function(req, res, next) {
     // TODO
 }
 

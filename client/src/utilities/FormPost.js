@@ -47,4 +47,24 @@ const postAddOarbeli = async function(values) {
     })
 }
 
-export { postAddOarbeli, putEditOarbeli };
+// The DELETE HTTP method is used when we want to delete an existing resource in
+// the server
+const deleteOarbeli = async function(id) {
+    let init = {
+        method: 'DELETE',
+    }
+
+    await fetch(
+        `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
+        init
+    )
+    .then((response) => {
+        if (response.status === 200) {
+            message.info(`The entry created on ${response.deletedDate} was successfully deleted.`);
+        } else {
+            message.info(`Something went wrong when deleting the entry created on ${response.deletedDate}.`);
+        }
+    })
+}
+
+export { postAddOarbeli, putEditOarbeli, deleteOarbeli };
