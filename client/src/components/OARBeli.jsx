@@ -11,8 +11,8 @@ const OARBeli = () => {
 
     const fetchData = async function() {
         await fetch(
-            "http://sawit-express.herokuapp.com/api/OARBeli/collection"
-            // "http://localhost:5000/api/OARBeli/collection"
+            // "http://sawit-express.herokuapp.com/api/OARBeli/collection"
+            "http://localhost:5000/api/OARBeli/collection"
         )
         .then((response) => {
             return response.json();
@@ -51,7 +51,11 @@ const OARBeli = () => {
                         title={"Are you sure you want to delete this entry?"} 
                         okText={"Yes"} 
                         cancelText={"No"}
-                        onConfirm={() => deleteOarbeli(record.key)}>
+                        onConfirm={() => {
+                            deleteOarbeli(record.key);
+                            setOarbeliArray(oarbeliArray);
+                            console.log("We are trying to rerender");
+                            }}>
                     <a href="google.com"><DeleteOutlined /> Delete</a>
                     </Popconfirm>
                 </span>
@@ -61,7 +65,7 @@ const OARBeli = () => {
     ]
 
     // Fetch oarbeli collection
-    useEffect(() => { fetchData() }, []);
+    useEffect(() => { fetchData() }, [oarbeliArray]);
 
     return (
         <div style={{ paddingTop: '16px' }}>

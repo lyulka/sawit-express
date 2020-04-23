@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { useParams, Redirect } from 'react-router-dom'; 
 import { Form, Input, Button, DatePicker, PageHeader } from 'antd';
@@ -10,18 +10,23 @@ const OARBeliInputForm = ({ action }) => {
 
     const urlParams = useParams();  
     const entryId = (action === "edit") ? urlParams.id : null;
+    const formRef = useRef(null);
+
+    useEffect(() => {
+        getEditOarbeli(entryId, formRef.current.setFieldsValue)
+    }, 
+    []);
 
     const options = (action === "edit") ?
     { // Options for Edit new OAR Beli form
         editingMessage: `You are editing entry ID: ${entryId}`,
-        pageTitle: "🌴 Edit OAR Beli",
+        pageHeader: "🌴 Edit OAR Beli",
         onFinish: (values) => {
             for (const key of Object.keys(values)) {
                 if (values[key] === undefined) { values[key] = 0 };
             }
     
             values.id = entryId;
-            console.log(values);
             putEditOarbeli(values);
     
             setFinished(true);
@@ -29,18 +34,16 @@ const OARBeliInputForm = ({ action }) => {
         onFinishFailed: (errorInfo) => {
             console.log('Failed:', errorInfo);
         },
-        initialValues: getEditOarbeli(entryId),
     }
     :
     { // Options for Add new OAR Beli form
         editingMessage: false,
-        pageTitle: "🌴 Add new OAR Beli",
+        pageHeader: "🌴 Add new OAR Beli",
         onFinish: (values) => {
             for (const key of Object.keys(values)) {
                 if (values[key] === undefined) { values[key] = 0 };
             }
-    
-            console.log(values);
+            
             postAddOarbeli(values);
     
             setFinished(true);
@@ -48,7 +51,6 @@ const OARBeliInputForm = ({ action }) => {
         onFinishFailed: (errorInfo) => {
             console.log('Failed:', errorInfo);
         },
-        initialValues: {},
     };
 
     const [ finished, setFinished ] = useState(false); 
@@ -69,18 +71,13 @@ const OARBeliInputForm = ({ action }) => {
         [ "ss", "SS" ]
     ]
 
-    const validateMessages = {
-        required: '${label} is required!',
-        number: '${label} must be a positive number'
-    }
-
     return (
         <div>
         { (finished) && <Redirect to="/OARBeli" /> }
 
         <PageHeader
             onBack={() => window.history.back()}
-            title={"🌴 Add new OAR Beli"}>
+            title={options.pageHeader}>
         </PageHeader>
 
         { (options.editingMessage) && (
@@ -94,8 +91,7 @@ const OARBeliInputForm = ({ action }) => {
             onFinish={options.onFinish}
             onFinishFailed={options.onFinishFailed}
             labelCol={{ span: 4 }}
-            validateMessages={validateMessages}
-            initialValues={options.initialValues}
+            ref={formRef}
         >
             <Form.Item name={'date'} label={'Date'}>
                 <DatePicker style={{width: '100%'}}/>
