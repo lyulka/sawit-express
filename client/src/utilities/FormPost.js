@@ -13,7 +13,7 @@ const getEditOarbeli = function(entryId, setInitialValues) {
     }
 
     fetch(
-        `http://sawit-express.herokuapp.com/api/OARBeli/entry/${entryId}`,
+        `http://sawit-express.herokuapp.com/api/OARBeli/collection/entry/${entryId}`,
         // `http://localhost:5000/api/OARBeli/collection/entry/${entryId}`,
         init
     )
