@@ -94,7 +94,7 @@ const oarbeli_edit_get = function(req, res, next) {
     })
 }
 
-const oarbeli_edit_post = function(req, res, next) {
+const oarbeli_edit_put = function(req, res, next) {
 
 }
 
@@ -112,7 +112,7 @@ router.get('/collection/create', (req, res) => {
 });
 
 // POST request for deleting oarbeli
-router.post('/collection/delete/:id, oarbeli_delete_post');
+router.post('/collection/delete/:id', oarbeli_delete_post);
 router.get('/collection/detete/:id', (req, res) => {
     res.send("This is the endpoint for deleting post: " + req.params.id);
 })
@@ -121,6 +121,6 @@ router.get('/collection/detete/:id', (req, res) => {
 router.get('/collection/entry/:id', oarbeli_edit_get);
 
 // POST request for editing oarbeli
-// router.post('/collection/edit/:id, oarbeli_edit_post);
+// router.put('/collection/edit/:id, oarbeli_edit_post);
 
 module.exports = router;

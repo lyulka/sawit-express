@@ -83,4 +83,4 @@ const deleteOarbeli = async function(id) {
     })
 }
 
-export { postAddOarbeli, putEditOarbeli, deleteOarbeli };
+export { postAddOarbeli, putEditOarbeli, deleteOarbeli, getEditOarbeli };
