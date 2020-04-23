@@ -80,11 +80,22 @@ const oarbeli_delete_post = function(req, res, next) {
 }
 
 const oarbeli_edit_get = function(req, res, next) {
-    // TODO
+    async.parallel({
+        entry_oarbeli: (callback) => {
+            OARBeli
+                .findOne(req.params.id)
+                .exec(callback);
+        },
+    }, (err, results) => {
+        if (err) { return next(err); }
+
+        // Successful, so send
+        res.json(results.entry_oarbeli);
+    })
 }
 
 const oarbeli_edit_post = function(req, res, next) {
-    // TODO
+
 }
 
 
@@ -101,7 +112,13 @@ router.get('/collection/create', (req, res) => {
 });
 
 // POST request for deleting oarbeli
-// router.post('/collection/delete/:id, oarbeli_delete_post);
+router.post('/collection/delete/:id, oarbeli_delete_post');
+router.get('/collection/detete/:id', (req, res) => {
+    res.send("This is the endpoint for deleting post: " + req.params.id);
+})
+
+// GET request for editing oarbeli
+router.get('/collection/entry/:id', oarbeli_edit_get);
 
 // POST request for editing oarbeli
 // router.post('/collection/edit/:id, oarbeli_edit_post);

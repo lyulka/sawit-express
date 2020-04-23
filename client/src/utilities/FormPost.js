@@ -22,6 +22,22 @@ const putEditOarbeli = async function(values) {
     })
 }
 
+const getEditOarbeli = function(entryId) {
+    let init = {
+        method: 'GET',
+    }
+
+    await fetch(
+        `http://sawit-express.herokuapp.com/api/OARBeli/entry/${entryId}`,
+        init
+    )
+    .then((response) => {
+        return response.json();
+    }).then((response) => {
+        return response;
+    })
+}
+
 // The POST HTTP method is used when we want to create a new resource in the
 // server
 const postAddOarbeli = async function(values) {

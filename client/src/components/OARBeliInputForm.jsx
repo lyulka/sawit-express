@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom'; 
 import { Form, Input, Button, DatePicker, PageHeader } from 'antd';
 import HargaTonaseInput from './HargaTonaseInput.jsx';
-import { putEditOarbeli, postAddOarbeli } from '../utilities/FormPost';
+import { putEditOarbeli, postAddOarbeli, getEditOarbeli } from '../utilities/FormPost';
 
 const OARBeliInputForm = ({ action }) => {
 
@@ -29,6 +29,7 @@ const OARBeliInputForm = ({ action }) => {
         onFinishFailed: (errorInfo) => {
             console.log('Failed:', errorInfo);
         },
+        initialValues: getEditOarbeli(entryId),
     }
     :
     { // Options for Add new OAR Beli form
@@ -47,6 +48,7 @@ const OARBeliInputForm = ({ action }) => {
         onFinishFailed: (errorInfo) => {
             console.log('Failed:', errorInfo);
         },
+        initialValues: {},
     };
 
     const [ finished, setFinished ] = useState(false); 
@@ -93,6 +95,7 @@ const OARBeliInputForm = ({ action }) => {
             onFinishFailed={options.onFinishFailed}
             labelCol={{ span: 4 }}
             validateMessages={validateMessages}
+            initialValues={options.initialValues}
         >
             <Form.Item name={'date'} label={'Date'}>
                 <DatePicker style={{width: '100%'}}/>
@@ -110,7 +113,7 @@ const OARBeliInputForm = ({ action }) => {
 
             <Form.Item
                 label="Kos Olah"
-                name="kosolah">
+                name="kosOlah">
                 <Input
                     type="number"
                     suffix="Rp/kg"
