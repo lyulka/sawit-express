@@ -27,7 +27,7 @@ const getEditOarbeli = function(entryId) {
         method: 'GET',
     }
 
-    await fetch(
+    fetch(
         `http://sawit-express.herokuapp.com/api/OARBeli/entry/${entryId}`,
         init
     )

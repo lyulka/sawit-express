@@ -113,7 +113,7 @@ router.get('/collection/create', (req, res) => {
 
 // POST request for deleting oarbeli
 router.post('/collection/delete/:id', oarbeli_delete_post);
-router.get('/collection/detete/:id', (req, res) => {
+router.delete('/collection/detete/:id', (req, res) => {
     res.send("This is the endpoint for deleting post: " + req.params.id);
 })
 
