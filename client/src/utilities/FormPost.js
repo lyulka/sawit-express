@@ -13,8 +13,8 @@ const getEditOarbeli = function(entryId, setInitialValues) {
     }
 
     fetch(
-        // `http://sawit-express.herokuapp.com/api/OARBeli/entry/${entryId}`,
-        `http://localhost:5000/api/OARBeli/collection/entry/${entryId}`,
+        `http://sawit-express.herokuapp.com/api/OARBeli/entry/${entryId}`,
+        // `http://localhost:5000/api/OARBeli/collection/entry/${entryId}`,
         init
     )
     .then((response) => {
@@ -37,8 +37,8 @@ const postAddOarbeli = async function(values) {
     }
 
     await fetch(
-        // "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
-        "http://localhost:5000/api/OARBeli/collection/create",
+        "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
+        // "http://localhost:5000/api/OARBeli/collection/create",
         init
     )
     .then((response) => {
@@ -62,8 +62,8 @@ const putEditOarbeli = async function(values) {
     }
 
     await fetch(
-        // `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
-        `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
+        `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
+        // `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
         init
     )
     .then((response) => {
@@ -83,8 +83,8 @@ const deleteOarbeli = async function(id) {
     }
 
     await fetch(
-        // `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
-        `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
+        `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
+        // `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
         init
     )
     .then((response) => {
