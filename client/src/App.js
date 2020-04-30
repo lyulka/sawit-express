@@ -4,15 +4,14 @@ import 'antd/dist/antd.css';
 import './App.css';
 
 import { Route, Switch, Link } from 'react-router-dom' 
+import { OARBeliContextProvider } from './contexts/OARBeliContext';
 import OARBeli from './components/OARBeli';
-// import OARBeliAdd from './components/OARBeliAdd';
-// import OARBeliEdit from './components/OARBeliEdit';
 import OARBeliInputForm from './components/OARBeliInputForm'
 import { Menu } from 'antd';
 
 function App() {
 
-  const Home = () => {
+  const App = () => {
     return (
       <div>
         <Menu mode="horizontal">
@@ -38,9 +37,11 @@ function App() {
 
   return (
     <div className="App">
-      <Switch>
-        <Route path='/' component={Home}/>
-      </Switch>
+      <OARBeliContextProvider>
+        <Switch>
+          <Route path='/' component={App}/>
+        </Switch>
+      </OARBeliContextProvider>
     </div>
   );
 }

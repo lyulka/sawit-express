@@ -1,16 +1,18 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 
 import { useParams, Redirect } from 'react-router-dom'; 
 import { Form, Input, Button, DatePicker, PageHeader } from 'antd';
+
+import { OARBeliContext } from '../contexts/OARBeliContext'; 
 import HargaTonaseInput from './HargaTonaseInput.jsx';
-import { putEditOarbeli, postAddOarbeli, getEditOarbeli } from '../utilities/FormPost';
 
 const OARBeliInputForm = ({ action }) => {
-
     const urlParams = useParams();  
     const entryId = (action === "edit") ? urlParams.id : null;
     const formRef = useRef(null);
+
+    const { putEditOarbeli, postAddOarbeli, getEditOarbeli } = useContext(OARBeliContext);
 
     useEffect(() => {
         getEditOarbeli(entryId, formRef.current.setFieldsValue)

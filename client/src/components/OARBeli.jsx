@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 import { Button, Table, Popconfirm } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { VictoryBar } from 'victory'; 
 
-import { deleteOarbeli } from '../utilities/FormPost'; 
-
+import { OARBeliContext } from '../contexts/OARBeliContext';
 
 const OARBeli = () => {
 
-    const fetchData = async function() {
-        await fetch(
-            "http://sawit-express.herokuapp.com/api/OARBeli/collection"
-            // "http://localhost:5000/api/OARBeli/collection"
-        )
-        .then((response) => {
-            return response.json();
-        })
-        .then((array) => {
-            for (const element of array)
-                element.key = element._id;
-
-            setOarbeliArray(array);
-        })
-    }
-
     // Data source and columns
-    const [ oarbeliArray, setOarbeliArray ] = useState([]);
+    const { refetch, oarbeliArray, deleteOarbeli, getAllOarbeli } = useContext(OARBeliContext);
+
     const columns = [
         {
             title: 'Date',
@@ -53,8 +38,6 @@ const OARBeli = () => {
                         cancelText={"No"}
                         onConfirm={() => {
                             deleteOarbeli(record.key);
-                            setOarbeliArray(oarbeliArray);
-                            console.log("We are trying to rerender");
                             }}>
                     <a href="google.com"><DeleteOutlined /> Delete</a>
                     </Popconfirm>
@@ -65,7 +48,7 @@ const OARBeli = () => {
     ]
 
     // Fetch oarbeli collection
-    useEffect(() => { fetchData() }, [oarbeliArray]);
+    useEffect(() => { getAllOarbeli() }, []);
 
     return (
         <div style={{ paddingTop: '16px' }}>

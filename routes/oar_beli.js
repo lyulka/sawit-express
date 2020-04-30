@@ -71,9 +71,6 @@ const oarbeli_delete_post = function(req, res, next) {
         OARBeli.deleteOne({ _id: entryId }, (err) => {
             return next(err);
         })
-
-        res.send("Delete successful");
-
     } catch(err) {
         return next(err);
     }
