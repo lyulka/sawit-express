@@ -1,4 +1,6 @@
-passwords.json
+.env
+populatedb.js
 node_modules
 client/node_modules
 client/build
+bfg-1.13.0.jar
