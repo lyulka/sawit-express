@@ -105,8 +105,10 @@ class OARBeliContextProvider extends React.Component {
             return response.json();
         })
         .then((array) => {
-            for (const element of array)
+            for (const element of array) {
                 element.key = element._id;
+                element.date = new Date(element.date);
+            }
 
             this.setOarbeli(array);
         })

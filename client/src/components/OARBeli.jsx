@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 import { Button, Table, Popconfirm } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { VictoryBar, VictoryChart, VictoryAxis } from 'victory'; 
+import { PlusOutlined, EditOutlined, DeleteOutlined, ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory'; 
 
 import { OARBeliContext } from '../contexts/OARBeliContext';
 
@@ -47,14 +47,25 @@ const OARBeli = () => {
     const [ weekOarbeliArray, setWeekOarbeliArray ] = useState([]);
 
     useEffect(() => {
-        let weekOarbeli = oarbeliArray.filter((entry) => {
+        var relevantOarbeli = oarbeliArray.filter((entry) => {
             return (new Date(entry.date) >= week.startDate && new Date(entry.date) < week.endDate);
         });
 
-        setWeekOarbeliArray(weekOarbeli);
+        var weekOarbeli = [];
 
-        console.log(weekOarbeli);
-    }, [oarbeliArray]);
+        for (const entry of relevantOarbeli)
+            weekOarbeli[entry.date.getDay()] = entry;
+
+        for (let i = 0; i <= 6; i++) {
+            if (weekOarbeli[i] == null) {
+                let dummyDate = new Date(week.startDate.getTime());
+                dummyDate.setDate(week.startDate.getDate() + i);
+                weekOarbeli[i] = { date: dummyDate, oarBeli: 0};
+            }
+        }
+
+        setWeekOarbeliArray(weekOarbeli);
+    }, [week, oarbeliArray]);
 
     
     // Fetch oarbeli collection
@@ -101,18 +112,20 @@ const OARBeli = () => {
                 // domainPadding will add space to each side of VictoryBar
                 // to prevent it from overlapping the axis
                 domainPadding={20}
+                theme={VictoryTheme}
+                scale={{ x: "time" }}
             >
                 <VictoryAxis
                     tickValues={[1, 2, 3, 4, 5, 6, 7]}
-                    tickFormat={["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
+                    tickFormat={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
                 />
                 <VictoryAxis
                     dependentAxis
                     tickFormat={(x) => (`${x * 100}%`)}
                 />
                 <VictoryBar
-                    data={oarbeliArray}
-                    x="date"
+                    data={weekOarbeliArray}
+                    // x="date"
                     y="oarBeli"
                 />
             </VictoryChart>
@@ -121,13 +134,13 @@ const OARBeli = () => {
              - ${week.endDate.getDate() - 1}/${week.endDate.getMonth()}/${week.endDate.getFullYear()}`}
              </span>
             <div>
-                <Button type="link" onClick={decrementWeek}>Previous week</Button>
-                <Button type="link" onClick={incrementWeek}>Next week</Button>
+                <Button type="link" onClick={decrementWeek}><ArrowLeftOutlined />Previous week</Button>
+                <Button type="link" onClick={incrementWeek}>Next week<ArrowRightOutlined /></Button>
                 <Button type="link" onClick={() => setWeek(getInitialDateRange())}>Current week</Button>
             </div>
             <Button 
                 type="dashed" 
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginTop: '16px', marginBottom: '8px' }}
                 icon={<PlusOutlined />}>
                 <Link to='/OARBeli/add'>Add OAR Beli</Link>
             </Button>
