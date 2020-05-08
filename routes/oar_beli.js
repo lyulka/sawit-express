@@ -23,11 +23,8 @@ const oarbeli_create_post = function(req, res, next) {
         var oarbeli = new OARBeli({
             date: req.body.date,
             cpo: req.body.cpo,
-            cpoTonnage: req.body.cpoTonnage,
             pk: req.body.pk,
-            pkTonnage: req.body.pkTonnage,
             cangkang: req.body.cangkang,
-            cangkangTonnage: req.body.cangkangTonnage,
             ring1: req.body.ring1,
             ring1Tonnage: req.body.ring1Tonnage,
             rampLuar: req.body.rampLuar,

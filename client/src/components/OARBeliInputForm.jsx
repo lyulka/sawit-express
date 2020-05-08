@@ -58,9 +58,6 @@ const OARBeliInputForm = ({ action }) => {
     const [ finished, setFinished ] = useState(false); 
 
     const fieldAndLabelNames = [
-        [ "cpo", "CPO" ],
-        [ "pk", "PK" ],
-        [ "cangkang", "Cangkang" ],
         [ "ring1", "Ring 1" ],
         [ "rampLuar", "Ramp Luar" ],
         [ "ptpn", "PTPN" ],
@@ -99,6 +96,31 @@ const OARBeliInputForm = ({ action }) => {
                 <DatePicker style={{width: '100%'}}/>
             </Form.Item>
 
+            <Form.Item
+                label="CPO"
+                name="cpo">
+                <Input
+                    type="number"
+                    suffix="Rp/kg"
+                />
+            </Form.Item>
+            <Form.Item
+                label="PK"
+                name="pk">
+                <Input
+                    type="number"
+                    suffix="Rp/kg"
+                />
+            </Form.Item>
+            <Form.Item
+                label="Cangkang"
+                name="cangkang">
+                <Input
+                    type="number"
+                    suffix="Rp/kg"
+                />
+            </Form.Item>
+
             {fieldAndLabelNames.map((fieldLabelPair) => {
                 return (
                     <HargaTonaseInput
@@ -116,7 +138,6 @@ const OARBeliInputForm = ({ action }) => {
                     type="number"
                     suffix="Rp/kg"
                 />
-
             </Form.Item>
             <Form.Item>
                 <Button type="primary" htmlType="submit" style={{float: 'right'}}>

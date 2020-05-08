@@ -6,11 +6,8 @@ var Schema = mongoose.Schema;
 var OARBeliSchema = new Schema ({
     date: { type: Date, required: true, unique: true },
     cpo: { type: Number, required: true },
-    cpoTonnage: { type: Number, required: true },
     pk: { type: Number, required: true },
-    pkTonnage: { type: Number, required: true },
     cangkang: { type: Number, required: true },
-    cangkangTonnage: { type: Number, required: true },
     ring1: { type: Number, required: true },
     ring1Tonnage: { type: Number, required: true },
     rampLuar: { type: Number, required: true },
