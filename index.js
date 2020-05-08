@@ -2,19 +2,17 @@ var express = require('express');
 var path = require('path');
 var cors = require('cors');
 var bodyParser = require('body-parser');
+require('dotenv').config();
 
 var oarbeliRouter = require('./routes/oar_beli')
 var oarlabRouter = require('./routes/oar_lab');
 var olahRouter = require('./routes/olah');
 
-// Get passwords
-var passwords = require('./passwords.json');
-
 var app = express();
 
 // Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = passwords.connectionStringSawit0;
+var mongoDB = process.env.connectionstring;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind); // binds the error event.
