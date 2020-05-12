@@ -73,6 +73,31 @@ class OARBeliContextProvider extends React.Component {
         })
     }
 
+    // The PUT HTTP method is used when we want to edit an existing resource in the
+    // server.
+    putEditOarbeli = async (values) => {
+        let init = {
+            method: 'PUT',
+            body: JSON.stringify(values),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+
+        await fetch(
+            `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
+            // `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
+            init
+        )
+        .then((response) => {
+            if (response.status === 200) {
+                message.info("Entry edited");
+            } else {
+                message.info("Something went wrong when editing the entry.");
+            }
+        })
+    }
+
     deleteOarbeli = async (id) => {
         let init = {
             method: 'DELETE',
@@ -127,6 +152,7 @@ class OARBeliContextProvider extends React.Component {
                 refetchOarbeli: this.refetchOarbeli, 
                 getEditOarbeli: this.getEditOarbeli,
                 postAddOarbeli: this.postAddOarbeli,
+                putEditOarbeli: this.putEditOarbeli,
                 deleteOarbeli: this.deleteOarbeli,
                 getAllOarbeli: this.getAllOarbeli }}>
                 {this.props.children}
