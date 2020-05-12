@@ -23,6 +23,8 @@ const getTargetOarbeli = (body) => {
     totalPembelian -= body.totalTonnage * 1000 * 0.04 * body.cangkang;
     totalPembelian -= body.totalTonnage * 1000 * 0.04 * body.pk;
 
+    console.log(body);
+
     targetOarbeli = totalPembelian / (totalTonnage * body.cpo);
 
     return targetOarbeli;
@@ -90,7 +92,8 @@ const oarbeli_delete_post = function(req, res, next) {
         const entryId = req.params.id;
 
         OARBeli.deleteOne({ _id: entryId }, (err) => {
-            return next(err);
+            if (err) 
+                return next(err);
         })
     } catch(err) {
         return next(err);
