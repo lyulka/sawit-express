@@ -98,7 +98,22 @@ const OARBeliInputForm = ({ action }) => {
 
             <Form.Item
                 label="CPO"
-                name="cpo">
+                name="cpo"
+                rules={[
+                    {
+                        required: true,
+                        message: 'CPO price is a required field',
+                    },
+                    () => ({
+                        validator(rule, value) {
+                            if (value > 0) {
+                                return Promise.resolve();
+                            }
+
+                            return Promise.reject('CPO price cannot be negative');
+                        }
+                    })
+                ]}>
                 <Input
                     type="number"
                     suffix="Rp/kg"
@@ -106,7 +121,23 @@ const OARBeliInputForm = ({ action }) => {
             </Form.Item>
             <Form.Item
                 label="PK"
-                name="pk">
+                name="pk"
+                rules={[
+                    {
+                        required: true,
+                        message: 'PK price is a required field',
+                    },
+                    () => ({
+                        validator(rule, value) {
+                            if (value > 0) {
+                                return Promise.resolve();
+                            }
+
+                            return Promise.reject('PK price cannot be negative');
+                        },
+                    })
+                ]}
+                >
                 <Input
                     type="number"
                     suffix="Rp/kg"
@@ -114,7 +145,22 @@ const OARBeliInputForm = ({ action }) => {
             </Form.Item>
             <Form.Item
                 label="Cangkang"
-                name="cangkang">
+                name="cangkang"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Cangkang price is a required field',
+                    },
+                    () => ({
+                        validator(rule, value) {
+                            if (value > 0) {
+                                return Promise.resolve();
+                            }
+
+                            return Promise.reject('Cangkang price cannot be negative');
+                        }
+                    }),
+                ]}>
                 <Input
                     type="number"
                     suffix="Rp/kg"
