@@ -70,7 +70,7 @@ const oarbeli_create_post = function(req, res, next) {
             ss: req.body.ss,
             ssTonnage: req.body.ssTonnage,
             kosOlah: req.body.kosOlah,
-            oarBeli: 0.69,
+            oarBeli: getTargetOarbeli(req.body),
         });
 
 
