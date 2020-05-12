@@ -4,6 +4,30 @@ var router = express.Router();
 
 var OARBeli = require('../models/oar_beli');
 
+const getTargetOarbeli = (body) => {
+    var totalPembelian = 0;
+    var totalTonnage = (body.ring1Tonnage + body.rampLuarTonnage + body.ptpnTonnage + body.intiTonnage + body.plasma1Tonnage + body.plasma3Tonnage
+        + body.hklTonnage + body.hklaTonnage + body.ssTonnage);
+    var targetOarbeli;
+
+    totalPembelian += body.ring1 * body.ring1Tonnage;
+    totalPembelian += body.rampLuar * body.rampLuarTonnage;
+    totalPembelian += body.ptpn * body.ptpnTonnage;
+    totalPembelian += body.inti * body.intiTonnage;
+    totalPembelian += body.plasma1 * body.plasma1Tonnage;
+    totalPembelian += body.plasma3 * body.plasma3Tonnage;
+    totalPembelian += body.hkl * body.hklTonnage;
+    totalPembelian += body.hkla * body.hklaTonnage;
+    totalPembelian += body.ss * body.ssTonnage;
+    totalPembelian += body.kosOlah * body.totalTonnage * 1000;
+    totalPembelian -= body.totalTonnage * 1000 * 0.04 * body.cangkang;
+    totalPembelian -= body.totalTonnage * 1000 * 0.04 * body.pk;
+
+    targetOarbeli = totalPembelian / (totalTonnage * body.cpo);
+
+    return targetOarbeli;
+}
+
 const oarbeli_collection = function(req, res, next) {
     async.parallel({
         list_oarbeli: (callback) => {
@@ -120,7 +144,7 @@ const oarbeli_edit_put = function(req, res, next) {
         ss: Number(req.body.ss),
         ssTonnage: Number(req.body.ssTonnage),
         kosOlah: Number(req.body.kosOlah),
-        oarBeli: 0.69,
+        oarBeli: getTargetOarbeli(req.body),
     };
 
     async.parallel({
