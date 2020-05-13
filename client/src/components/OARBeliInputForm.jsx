@@ -25,10 +25,17 @@ const OARBeliInputForm = ({ action }) => {
         pageHeader: "🌴 Edit OAR Beli",
         onFinish: (values) => {
             for (const key of Object.keys(values)) {
-                if (values[key] === undefined) { values[key] = 0 };
+                if (values[key] === undefined) 
+                    values[key] = 0;
+                if (key === "date") 
+                    continue;
+                else 
+                    values[key] = parseInt(values[key]);
             }
     
             values.id = entryId;
+
+            console.log(values);
             putEditOarbeli(values);
     
             setFinished(true);
@@ -44,8 +51,13 @@ const OARBeliInputForm = ({ action }) => {
         onFinish: (values) => {
             for (const key of Object.keys(values)) {
                 if (values[key] === undefined) { values[key] = 0 };
+                if (key === "date") 
+                    continue;
+                else 
+                    values[key] = parseInt(values[key]);
             }
             
+            console.log(values);
             postAddOarbeli(values);
     
             setFinished(true);
@@ -181,7 +193,7 @@ const OARBeliInputForm = ({ action }) => {
                 label="Kos Olah"
                 name="kosOlah">
                 <Input
-                    type="number"
+                    tpye="number"
                     suffix="Rp/kg"
                 />
             </Form.Item>

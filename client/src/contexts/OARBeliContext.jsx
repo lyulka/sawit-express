@@ -1,49 +1,25 @@
-import React from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 import { message } from 'antd';
 import moment from 'moment';
 
-const OARBeliContext = React.createContext();
-class OARBeliContextProvider extends React.Component {
-    state = {
-        oarbeliArray: [],
-    }
+const OARBeliContext = createContext();
+const OARBeliContextProvider = ({ children }) => {
+    const [ oarbeliArray, setOarbeliArray ] = useState([]);
 
-    setOarbeli = (array) => {
-        this.setState({ oarbeliArray: array });
-    }
-
-    refetchOarbeli = () => {
-        this.getAllOarbeli();
-    }
-
-    getEditOarbeli = async (entryId, callback) => {
+    const getEditOarbeli = (entryId, callback) => {
         console.log("getEditOarbeli: in");
 
-        // Will be called if OARBeliInputForm rendered is of the Edit variant.
-        if (entryId === null) {
+        if (entryId === null) 
             return;
-        }
 
-
-        let init = {
-            method: 'GET',
-        }
-
-        await fetch(
-            `http://sawit-express.herokuapp.com/api/OARBeli/collection/entry/${entryId}`,
-            // `http://localhost:5000/api/OARBeli/collection/entry/${entryId}`,
-            init
-        )
-        .then((response) => {
-            return response.json();
-        }).then((json) => {
-            json.date = moment(json.date);
-            callback(json);
-        })
+        const editEntry = oarbeliArray.find((entry) => entry._id === entryId);
+        editEntry.date = moment(editEntry.date);
+        
+        callback(editEntry);
     }
 
-    postAddOarbeli = async (values) => {
+    const postAddOarbeli = async (values) => {
         console.log("postAddOarbeli: in");
 
         let init = {
@@ -53,13 +29,10 @@ class OARBeliContextProvider extends React.Component {
                 'Content-Type': 'application/json'
             },
         }
-    
-        // This entire expression immediately returns a resolved promise with value
-        // undefined; but the API still runs in the background and pushes the attached
-        // callbacks 
+
         await fetch(
-            "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
-            // "http://localhost:5000/api/OARBeli/collection/create",
+            // "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
+            "http://localhost:5000/api/OARBeli/collection/create",
             init
         )
         .then((response) => {
@@ -69,13 +42,12 @@ class OARBeliContextProvider extends React.Component {
                 message.info("Something went wrong when creating the entry.");
             }
 
-            this.refetchOarbeli();
+            getAllOarbeli();
         })
     }
 
-    // The PUT HTTP method is used when we want to edit an existing resource in the
-    // server.
-    putEditOarbeli = async (values) => {
+    const putEditOarbeli = async (values) => {
+        console.log("putEditOarbeli: in");
         let init = {
             method: 'PUT',
             body: JSON.stringify(values),
@@ -85,8 +57,8 @@ class OARBeliContextProvider extends React.Component {
         }
 
         await fetch(
-            `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
-            // `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
+            // `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
+            `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
             init
         )
         .then((response) => {
@@ -95,36 +67,37 @@ class OARBeliContextProvider extends React.Component {
             } else {
                 message.info("Something went wrong when editing the entry.");
             }
-        })
+        });
     }
 
-    deleteOarbeli = async (id) => {
+    const deleteOarbeli = async (id) => {
+        console.log("deleteOarbeli: in");
         let init = {
             method: 'DELETE',
         }
-    
+
         await fetch(
-            `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
-            // `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
+            // `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
+            `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
             init
         )
         .then((response) => {
-            if (response.status === 200) {
+            console.log("deleting complete");
+            if (response.status === 200)
                 message.info(`Entry deleted`);
-            } else {
+            else
                 message.info(`Something went wrong when deleting the entry created on ${response.deletedDate}.`);
-            }
 
-            this.refetchOarbeli();
-        }) 
+            getAllOarbeli();
+        });
     }
 
-    getAllOarbeli = async () => {
-        console.log('getAllOarbeli: in');
+    const getAllOarbeli = async () => {
+        console.log("getAllOarbeli: in");
 
         await fetch(
-            "http://sawit-express.herokuapp.com/api/OARBeli/collection"
-            // "http://localhost:5000/api/OARBeli/collection"
+            // "http://sawit-express.herokuapp.com/api/OARBeli/collection"
+            "http://localhost:5000/api/OARBeli/collection"
         )
         .then((response) => {
             return response.json();
@@ -135,31 +108,24 @@ class OARBeliContextProvider extends React.Component {
                 element.date = new Date(element.date);
             }
 
-            this.setOarbeli(array);
-        })
+            setOarbeliArray(array);
+        });
     }
 
-    // Initialize the oarbeliArray on mount.
-    componentDidMount() {
-        this.refetchOarbeli();
-    }
+    useEffect(() => { getAllOarbeli() }, []);
 
-    render() {
-        return (
-            <OARBeliContext.Provider value={{
-                ...this.state, 
-                setOarbeli: this.setOarbeli, 
-                refetchOarbeli: this.refetchOarbeli, 
-                getEditOarbeli: this.getEditOarbeli,
-                postAddOarbeli: this.postAddOarbeli,
-                putEditOarbeli: this.putEditOarbeli,
-                deleteOarbeli: this.deleteOarbeli,
-                getAllOarbeli: this.getAllOarbeli }}>
-                {this.props.children}
-            </OARBeliContext.Provider>
-        );
-    }
-
+    return (
+        <OARBeliContext.Provider value={{
+            oarbeliArray: oarbeliArray,
+            setOarbeliArray: setOarbeliArray,
+            getEditOarbeli: getEditOarbeli,
+            postAddOarbeli: postAddOarbeli,
+            putEditOarbeli: putEditOarbeli,
+            deleteOarbeli: deleteOarbeli,
+            getAllOarbeli: getAllOarbeli }}>
+            {children}
+        </OARBeliContext.Provider>
+    );
 }
 
 export { OARBeliContext, OARBeliContextProvider };
