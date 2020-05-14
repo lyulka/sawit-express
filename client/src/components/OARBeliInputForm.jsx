@@ -104,7 +104,15 @@ const OARBeliInputForm = ({ action }) => {
             labelCol={{ span: 4 }}
             ref={formRef}
         >
-            <Form.Item name={'date'} label={'Date'}>
+            <Form.Item 
+                name={'date'} 
+                label={'Date'}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Date is a required field',
+                    },
+                ]}>
                 <DatePicker style={{width: '100%'}}/>
             </Form.Item>
 

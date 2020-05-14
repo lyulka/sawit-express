@@ -31,8 +31,8 @@ const OARBeliContextProvider = ({ children }) => {
         }
 
         await fetch(
-            // "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
-            "http://localhost:5000/api/OARBeli/collection/create",
+            "http://sawit-express.herokuapp.com/api/OARBeli/collection/create",
+            // "http://localhost:5000/api/OARBeli/collection/create",
             init
         )
         .then((response) => {
@@ -57,8 +57,8 @@ const OARBeliContextProvider = ({ children }) => {
         }
 
         await fetch(
-            // `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
-            `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
+            `http://sawit-express.herokuapp.com/api/OARBeli/collection/edit/${values.id}`,
+            // `http://localhost:5000/api/OARBeli/collection/edit/${values.id}`,
             init
         )
         .then((response) => {
@@ -77,8 +77,8 @@ const OARBeliContextProvider = ({ children }) => {
         }
 
         await fetch(
-            // `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
-            `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
+            `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
+            // `http://localhost:5000/api/OARBeli/collection/delete/${id}`,
             init
         )
         .then((response) => {
@@ -96,8 +96,8 @@ const OARBeliContextProvider = ({ children }) => {
         console.log("getAllOarbeli: in");
 
         await fetch(
-            // "http://sawit-express.herokuapp.com/api/OARBeli/collection"
-            "http://localhost:5000/api/OARBeli/collection"
+            "http://sawit-express.herokuapp.com/api/OARBeli/collection"
+            // "http://localhost:5000/api/OARBeli/collection"
         )
         .then((response) => {
             return response.json();
