@@ -105,7 +105,7 @@ const OARBeliContextProvider = ({ children }) => {
         .then((array) => {
             for (const element of array) {
                 element.key = element._id;
-                element.date = new Date(element.date);
+                element.date = moment(element.date);
             }
 
             setOarbeliArray(array);

@@ -6,37 +6,42 @@ import { PlusOutlined, EditOutlined, DeleteOutlined, ArrowLeftOutlined, ArrowRig
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory'; 
 
 import { OARBeliContext } from '../contexts/OARBeliContext';
+import moment from 'moment';
 
 const OARBeli = () => {
 
     const getInitialDateRange = () => {
-        var date = new Date();
-        var day = date.getDay();
-        var startDate = new Date();
+        var date = moment()
+        console.log(typeof date);
+        console.log("var: date", date);
+        var day = date.day();
+        var startDate = moment()
 
-        if (date.getDay() === 0)
-            startDate.setDate(date.getDate() - 7);
+        if (date.day() === 0)
+            startDate.date(date.date() - 7);
         else
-            startDate.setDate(date.getDate() - day);
+            startDate.date(date.date() - day);
 
-        startDate.setHours(0, 0, 0);
+        startDate.hours(0);
+        startDate.minutes(0);
+        startDate.seconds(0);
 
-        var endDate = new Date(startDate.getTime());
-        endDate.setDate(startDate.getDate() + 7);
+        var endDate = moment(startDate);
+        endDate.date(startDate.date() + 7);
 
         return {startDate: startDate, endDate: endDate};
     }
 
     const incrementWeek = () => {
-        week.startDate.setDate(week.startDate.getDate() + 7);
-        week.endDate.setDate(week.endDate.getDate() + 7);
+        week.startDate.date(week.startDate.date() + 7);
+        week.endDate.date(week.endDate.date() + 7);
 
         setWeek({ startDate: week.startDate, endDate: week.endDate });
     }
 
     const decrementWeek = () => {
-        week.startDate.setDate(week.startDate.getDate() - 7);
-        week.endDate.setDate(week.endDate.getDate() - 7);
+        week.startDate.date(week.startDate.date() - 7);
+        week.endDate.date(week.endDate.date() - 7);
 
         setWeek({ startDate: week.startDate, endDate: week.endDate });
     }
@@ -48,19 +53,21 @@ const OARBeli = () => {
 
     useEffect(() => {
         var relevantOarbeli = oarbeliArray.filter((entry) => {
-            return (new Date(entry.date) >= week.startDate && new Date(entry.date) < week.endDate);
+            return (entry.date >= week.startDate && entry.date < week.endDate);
         });
 
         var weekOarbeli = [];
 
-        for (const entry of relevantOarbeli)
-            weekOarbeli[entry.date.getDay()] = entry;
+        for (const entry of relevantOarbeli) {
+            console.log("entry.date", entry.date);
+            weekOarbeli[entry.date.day()] = entry;
+        }
 
         for (let i = 0; i <= 6; i++) {
             if (weekOarbeli[i] == null) {
-                let dummyDate = new Date(week.startDate.getTime());
-                dummyDate.setDate(week.startDate.getDate() + i);
-                weekOarbeli[i] = { date: dummyDate, oarBeli: 0};
+                let dummyMoment = moment(week.startDate);
+                dummyMoment.date(week.startDate.date() + i);
+                weekOarbeli[i] = { date: dummyMoment, oarBeli: 0};
             }
         }
 
@@ -76,7 +83,7 @@ const OARBeli = () => {
             title: 'Date',
             dataIndex: 'date',
             key: 'date',
-            render: date => (new Date(date)).toDateString()
+            render: date => moment(date).format('DD/MM/YYYY'),
         },
         {
             title: 'OAR Beli',
@@ -130,8 +137,8 @@ const OARBeli = () => {
                 />
             </VictoryChart>
             <span>
-            {`Week of ${week.startDate.getDate()}/${week.startDate.getMonth()}/${week.startDate.getFullYear()}
-             - ${week.endDate.getDate() - 1}/${week.endDate.getMonth()}/${week.endDate.getFullYear()}`}
+            {`Week of ${week.startDate.date()}/${week.startDate.month()}/${week.startDate.year()}
+             - ${week.endDate.date() - 1}/${week.endDate.month()}/${week.endDate.year()}`}
              </span>
             <div>
                 <Button type="link" onClick={decrementWeek}><ArrowLeftOutlined />Previous week</Button>
