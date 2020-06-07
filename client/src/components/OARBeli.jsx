@@ -47,21 +47,20 @@ const OARBeli = () => {
     }
 
     // Data source and columns
-    const { oarbeliArray, deleteOarbeli, getAllOarbeli } = useContext(OARBeliContext);
+    const { oarbelis, deleteOarbeli, getAllOarbeli } = useContext(OARBeliContext);
     const [ week, setWeek ] = useState(getInitialDateRange());
     const [ weekOarbeliArray, setWeekOarbeliArray ] = useState([]);
 
     useEffect(() => {
-        var relevantOarbeli = oarbeliArray.filter((entry) => {
+        var relevantOarbeliArray = Object.values(oarbelis).filter((entry) => {
             return (entry.date >= week.startDate && entry.date < week.endDate);
         });
 
         var weekOarbeli = [];
 
-        for (const entry of relevantOarbeli) {
-            console.log("entry.date", entry.date);
+        relevantOarbeliArray.forEach(entry => {
             weekOarbeli[entry.date.day()] = entry;
-        }
+        })
 
         for (let i = 0; i <= 6; i++) {
             if (weekOarbeli[i] == null) {
@@ -72,7 +71,7 @@ const OARBeli = () => {
         }
 
         setWeekOarbeliArray(weekOarbeli);
-    }, [week, oarbeliArray]);
+    }, [week, oarbelis]);
 
     
     // Fetch oarbeli collection
@@ -115,6 +114,7 @@ const OARBeli = () => {
 
     return (
         <div style={{ paddingTop: '16px' }}>
+            {console.log('oarbelis', oarbelis)}
             <VictoryChart
                 // domainPadding will add space to each side of VictoryBar
                 // to prevent it from overlapping the axis
@@ -151,7 +151,8 @@ const OARBeli = () => {
                 icon={<PlusOutlined />}>
                 <Link to='/OARBeli/add'>Add OAR Beli</Link>
             </Button>
-            <Table dataSource={oarbeliArray} columns={columns}/>
+            {/* TODO: Find out if we can just pass in oarbelis as dataSource here */}
+            <Table dataSource={Object.values(oarbelis)} columns={columns}/>
         </div>
     );
 };

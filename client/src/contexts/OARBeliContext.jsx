@@ -5,23 +5,20 @@ import moment from 'moment';
 
 const OARBeliContext = createContext();
 const OARBeliContextProvider = ({ children }) => {
-    const [ oarbeliArray, setOarbeliArray ] = useState([]);
+
+    const [ oarbelis, setOarbelis ] = useState({});
 
     const getEditOarbeli = (entryId, callback) => {
-        console.log("getEditOarbeli: in");
-
         if (entryId === null) 
             return;
 
-        const editEntry = oarbeliArray.find((entry) => entry._id === entryId);
+        const editEntry = oarbelis[entryId]
         editEntry.date = moment(editEntry.date);
         
         callback(editEntry);
     }
 
     const postAddOarbeli = async (values) => {
-        console.log("postAddOarbeli: in");
-
         let init = {
             method: 'POST',
             body: JSON.stringify(values),
@@ -47,12 +44,11 @@ const OARBeliContextProvider = ({ children }) => {
     }
 
     const putEditOarbeli = async (values) => {
-        console.log("putEditOarbeli: in");
         let init = {
             method: 'PUT',
             body: JSON.stringify(values),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
         }
 
@@ -71,10 +67,7 @@ const OARBeliContextProvider = ({ children }) => {
     }
 
     const deleteOarbeli = async (id) => {
-        console.log("deleteOarbeli: in");
-        let init = {
-            method: 'DELETE',
-        }
+        const init = { method: 'DELETE' }
 
         await fetch(
             `http://sawit-express.herokuapp.com/api/OARBeli/collection/delete/${id}`,
@@ -93,8 +86,7 @@ const OARBeliContextProvider = ({ children }) => {
     }
 
     const getAllOarbeli = async () => {
-        console.log("getAllOarbeli: in");
-
+        console.log('getAllOarbeli: in')
         await fetch(
             "http://sawit-express.herokuapp.com/api/OARBeli/collection"
             // "http://localhost:5000/api/OARBeli/collection"
@@ -103,21 +95,24 @@ const OARBeliContextProvider = ({ children }) => {
             return response.json();
         })
         .then((array) => {
-            for (const element of array) {
-                element.key = element._id;
-                element.date = moment(element.date);
-            }
+            var newOarbeli = {};
 
-            setOarbeliArray(array);
+            array.forEach(element => {
+                newOarbeli[element._id] = {...element, key: element._id, date: moment(element.date)}
+            })
+
+            console.log('newOarbeli', newOarbeli);
+
+            setOarbelis(newOarbeli);
         });
     }
-
-    useEffect(() => { getAllOarbeli() }, []);
-
+    
+    useEffect(() => getAllOarbeli, []);
+    
     return (
         <OARBeliContext.Provider value={{
-            oarbeliArray: oarbeliArray,
-            setOarbeliArray: setOarbeliArray,
+            oarbelis: oarbelis,
+            setOarbeliArray: setOarbelis,
             getEditOarbeli: getEditOarbeli,
             postAddOarbeli: postAddOarbeli,
             putEditOarbeli: putEditOarbeli,
