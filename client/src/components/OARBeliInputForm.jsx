@@ -15,7 +15,10 @@ const OARBeliInputForm = ({ action }) => {
     const { putEditOarbeli, postAddOarbeli, getEditOarbeli } = useContext(OARBeliContext);
 
     useEffect(() => {
-        getEditOarbeli(entryId, formRef.current.setFieldsValue)
+        getEditOarbeli(entryId)
+            .then(editEntry => {
+                formRef.current.setFieldsValue(editEntry);
+            })
     }, 
     []);
 
