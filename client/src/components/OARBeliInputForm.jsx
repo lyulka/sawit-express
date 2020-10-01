@@ -23,7 +23,7 @@ const OARBeliInputForm = ({ action }) => {
     []);
 
     const options = (action === "edit") ?
-    { // Options for Edit new OAR Beli form
+    {
         editingMessage: `You are editing entry ID: ${entryId}`,
         pageHeader: "🌴 Edit OAR Beli",
         onFinish: (values) => {
